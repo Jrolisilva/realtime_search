@@ -19,3 +19,4 @@ production:
   database: realtime_search_production
   username: realtime_search
   password: <%= ENV["REALTIME_SEARCH_DATABASE_PASSWORD"] %>
+  host: <%= ENV["DATABASE_HOST"] %>

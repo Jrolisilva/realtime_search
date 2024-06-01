@@ -18,5 +18,5 @@ production:
   <<: *default
   database: realtime_search_production
   username: realtime_search
-  password: <%= ENV["REALTIME_SEARCH_DATABASE_PASSWORD"] %>
+  password: realtime_search
   host: <%= ENV["DATABASE_HOST"] %>

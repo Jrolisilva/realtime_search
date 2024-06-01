@@ -1,2 +1,49 @@
-<h1>Searches#index</h1>
-<p>Find me in app/views/searches/index.html.erb</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Realtime Search</title>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <div class="text-center w-full max-w-md">
+    <h1 class="text-3xl font-bold mb-6">Realtime Search Analytics</h1>
+    <input type="text" id="search-box" placeholder="Type to search..." class="w-full p-3 text-lg border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <ul id="results" class="mt-8 space-y-4">
+      <% @searches.each do |term, count| %>
+        <li class="bg-white p-4 rounded-lg shadow-md"><%= "#{term}" %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const searchBox = document.getElementById('search-box');
+      let timer;
+
+      searchBox.addEventListener('input', function() {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          if (searchBox.value.trim() !== '') {
+            fetch('/searches', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+              },
+              body: JSON.stringify({ search: { term: searchBox.value } })
+            }).then(response => response.json()).then(data => {
+              if (data.status === 'success') {
+                console.log('Search recorded');
+              } else {
+                console.error('Error:', data.message);
+              }
+            });
+          }
+        }, 1000); // Delay of 1 second to confirm the search
+      });
+    });
+  </script>
+</body>
+</html>

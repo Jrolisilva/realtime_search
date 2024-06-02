@@ -26,6 +26,6 @@
 !/tmp/storage/.keep
 
 /public/assets
-
+/master.key
 # Ignore master key for decrypting credentials and more.
 /node_modules

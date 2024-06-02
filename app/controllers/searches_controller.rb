@@ -5,9 +5,9 @@ class SearchesController < ApplicationController
 
   def create
     term = search_params[:term].strip
+    search = Search.where('? LIKE term || \'%\'', term).first
 
-    if find_term(term)
-      search = find_term(term)
+    if search
       update_term(search, search_params)
       flash[:notice] = 'Search updated successfully'
     else
@@ -21,10 +21,6 @@ class SearchesController < ApplicationController
 
   def search_params
     params.require(:search).permit(:term).merge(ip: request.remote_ip)
-  end
-
-  def find_term(term)
-    Search.where('? LIKE term || \'%\'', term).first
   end
 
   def update_term(search, search_params)

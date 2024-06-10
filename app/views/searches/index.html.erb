@@ -2,21 +2,21 @@
 <html>
 <head>
   <title>Realtime Search</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "custom", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-  <div class="text-center w-full max-w-md">
-    <h1 class="text-3xl font-bold mb-6">Realtime Search Analytics</h1>
-    <input type="text" id="search-box" placeholder="Type to search..." class="w-full p-3 text-lg border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-    <ul id="results" class="mt-8 space-y-4">
+<body>
+  <div class="text-center">
+    <h1>Realtime Search Analytics</h1>
+    <input type="text" id="search-box" placeholder="Type to search...">
+    <ul id="results">
       <% @searches.each do |term, count| %>
-        <li class="bg-white p-4 rounded-lg shadow-md"><%= "#{term}" %></li>
+        <li><%= "#{term}" %></li>
       <% end %>
     </ul>
   </div>
